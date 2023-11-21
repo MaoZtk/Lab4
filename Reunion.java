@@ -1,3 +1,10 @@
+
+/**
+ * Universidad del Valle de Guatemala - POO
+ * Marielos Ortíz, Sandra Pineda, Luisa Jiménez
+ * Laboratorio final
+ */
+
 import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -5,7 +12,10 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 
-// Clase que representa una reunión
+/**
+ * Clase que representa una reunión en el sistema de gestión de reuniones.
+ */
+
 class Reunion {
     // Nombre de la reunión
     private String nombre;
@@ -28,8 +38,21 @@ class Reunion {
     // Cantidad máxima de invitados permitida
     private int maxInvitados;
 
-    // Constructor
-    public Reunion(String nombre2, String pin2, String notas2, int duracion2, String estado2, String fecha2, int hora2, List<String> invitados, Usuario usuarioActual) {
+    /**
+     * Constructor para la creación de una reunión con detalles específicos.
+     *
+     * @param nombre2       Nombre de la reunión.
+     * @param pin2          Pin de la reunión.
+     * @param notas2        Notas de la reunión.
+     * @param duracion2     Duración de la reunión en minutos.
+     * @param estado2       Estado a mostrar durante la reunión.
+     * @param fecha2        Fecha de la reunión.
+     * @param hora2         Hora de la reunión.
+     * @param invitados     Lista de invitados a la reunión.
+     * @param usuarioActual Usuario que crea la reunión.
+     */
+    public Reunion(String nombre2, String pin2, String notas2, int duracion2, String estado2, String fecha2, int hora2,
+            List<String> invitados, Usuario usuarioActual) {
         this.nombre = nombre2;
         this.pin = pin2;
         this.notas = notas2;
@@ -39,15 +62,21 @@ class Reunion {
         this.hora = hora2;
         this.listaInvitados = invitados;
         this.usuario = usuarioActual;
-        
+
         // Utilizar operador ternario para asignar maxInvitados
         this.maxInvitados = (usuarioActual != null) ? usuarioActual.obtenerMaxInvitados() : 0;
     }
 
+    /**
+     * Constructor para la creación de una reunión asociada a un usuario.
+     *
+     * @param usuario Usuario que crea la reunión.
+     */
     public Reunion(Usuario usuario) {
         this.usuario = usuario;
         if (usuario != null) { // Verifica que el objeto usuario no sea nulo.
-            this.maxInvitados = usuario.obtenerMaxInvitados(); // Invoca el método obtenerMaxInvitados sobre el objeto usuario.
+            this.maxInvitados = usuario.obtenerMaxInvitados(); // Invoca el método obtenerMaxInvitados sobre el objeto
+                                                               // usuario.
         } else {
             this.maxInvitados = 0; // Asigna un valor por defecto al atributo maxInvitados.
         }

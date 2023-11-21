@@ -1,3 +1,11 @@
+
+/**
+ * Universidad del Valle de Guatemala - POO
+ * Marielos Ortíz, Sandra Pineda, Luisa Jiménez
+ * Laboratorio final
+ * El código implementa un sistema de gestión de reuniones con usuarios, permitiendo el registro, inicio de sesión, creación y visualización de reuniones, contactos, y ajustes de cuenta, con persistencia de datos en archivos CSV.
+ */
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -6,10 +14,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Clase principal que contiene el punto de entrada para la aplicación de
+ * gestión de reuniones.
+ */
 public class Main {
     private static Sistema sistema;
     private static Reunion reunion;
 
+    /**
+     * Punto de entrada principal para la aplicación.
+     *
+     * @param args Argumentos de la línea de comandos (no se utilizan en este caso).
+     */
     public static void main(String[] args) {
         sistema = new Sistema();
         boolean salir = false;
@@ -31,16 +48,17 @@ public class Main {
                     System.out.println("Ingrese el tipo de plan:"); // Pide el tipo de plan.
                     String tipoPlan = sc.nextLine(); // Lee el tipo de plan.
                     sistema.registrarUsuario(nombreUsuario, contraseña, tipoPlan);
-                break;
-            
+                    break;
+
                 case 2:
                     System.out.println("Ingrese su nombre de usuario:"); // Pide el nombre de usuario.
                     String nombreUsuario1 = sc.nextLine();
                     System.out.println("Ingrese su contraseña:"); // Pide la contraseña.
                     String contraseña1 = sc.nextLine();
-                    sistema.iniciarSesion(nombreUsuario1, contraseña1); // Llama al método iniciarSesion con los datos ingresados.
-                    mostrarMenu();    
-                break;
+                    sistema.iniciarSesion(nombreUsuario1, contraseña1); // Llama al método iniciarSesion con los datos
+                                                                        // ingresados.
+                    mostrarMenu();
+                    break;
                 case 3:
                     salir = true;
                     break;
@@ -95,33 +113,34 @@ public class Main {
             sc.nextLine();
             switch (opcion) {
                 case 1:
-                if (sistema.getUsuarioActual() != null) {
-                    System.out.println("Defina la fecha de la reunión (dd/mm/aaaa):");
-                    String fecha = sc.nextLine();
-                    System.out.println("Defina la hora de la reunión:");
-                    String hora = sc.nextLine();
-                    System.out.println("Defina el nombre de la reunión:");
-                    String nombre = sc.nextLine();
-                    System.out.println("Defina el pin de la reunión:");
-                    String pin = sc.nextLine();
-                    System.out.println("Defina las notas de la reunión:");
-                    String notas = sc.nextLine();
-                    System.out.println("Defina la duración de la reunión (en minutos):");
-                    int duracion = sc.nextInt();
-                    sc.nextLine();
-                    System.out.println("Defina el estado a mostrar mientras está en esta reunión (disponible u ocupado):");
-                    String estado = sc.nextLine();
-                    System.out.println("Defina la lista de invitados (separados por comas):");
-                    String invitadosInput = sc.nextLine();
-                    List<String> listaInvitados = Arrays.asList(invitadosInput.split(","));
-                    
-                    // Llama al método crearReunion con los parámetros obtenidos
-                    sistema.crearReunion(fecha, hora, nombre, pin, notas, duracion, listaInvitados, estado);
-                    System.out.println("Reunión creada exitosamente.");
-                } else {
-                    System.out.println("Debe iniciar sesión antes de crear una reunión.");
-                }
-                break;
+                    if (sistema.getUsuarioActual() != null) {
+                        System.out.println("Defina la fecha de la reunión (dd/mm/aaaa):");
+                        String fecha = sc.nextLine();
+                        System.out.println("Defina la hora de la reunión:");
+                        String hora = sc.nextLine();
+                        System.out.println("Defina el nombre de la reunión:");
+                        String nombre = sc.nextLine();
+                        System.out.println("Defina el pin de la reunión:");
+                        String pin = sc.nextLine();
+                        System.out.println("Defina las notas de la reunión:");
+                        String notas = sc.nextLine();
+                        System.out.println("Defina la duración de la reunión (en minutos):");
+                        int duracion = sc.nextInt();
+                        sc.nextLine();
+                        System.out.println(
+                                "Defina el estado a mostrar mientras está en esta reunión (disponible u ocupado):");
+                        String estado = sc.nextLine();
+                        System.out.println("Defina la lista de invitados (separados por comas):");
+                        String invitadosInput = sc.nextLine();
+                        List<String> listaInvitados = Arrays.asList(invitadosInput.split(","));
+
+                        // Llama al método crearReunion con los parámetros obtenidos
+                        sistema.crearReunion(fecha, hora, nombre, pin, notas, duracion, listaInvitados, estado);
+                        System.out.println("Reunión creada exitosamente.");
+                    } else {
+                        System.out.println("Debe iniciar sesión antes de crear una reunión.");
+                    }
+                    break;
                 case 2:
                     if (reunion != null) {
                         reunion.volverEmpezar(); // Llamar al método volverEmpezar de la instancia de Reunion
@@ -139,7 +158,9 @@ public class Main {
         }
     }
 
-    // Muestra el menú de calendario con las opciones disponibles
+    /**
+     * Muestra el menú de opciones para gestionar el calendario.
+     */
     public static void mostrarMenuCalendario() {
         boolean salir = false;
         while (!salir) {
@@ -152,7 +173,7 @@ public class Main {
             sc.nextLine();
             switch (opcion) {
                 case 1:
-                    sistema.listarUltimasReunionesUsuarioActual();            
+                    sistema.listarUltimasReunionesUsuarioActual();
                     break;
                 case 2:
                     sistema.imprimirListadoContactos();
@@ -167,7 +188,9 @@ public class Main {
         }
     }
 
-    // Muestra el menú de perfil con las opciones disponibles
+    /**
+     * Muestra el menú de opciones para gestionar el perfil del usuario.
+     */
     public static void mostrarMenuPerfil() {
         boolean salir = false;
         while (!salir) {
@@ -195,10 +218,12 @@ public class Main {
         }
     }
 
+    /**
+     * Método para volver a empezar el proceso de definición de reunión.
+     */
     public static void volverEmpezarReunion() {
         reunion.volverEmpezar();
         System.out.println("El proceso de definición de reunión ha sido reiniciado.");
     }
 
 }
-

@@ -1,7 +1,10 @@
 import java.io.*;
 import java.util.*;
 
-// Clase que representa un usuario
+/**
+ * Clase que representa un usuario del sistema de gestión de reuniones.
+ */
+
 class Usuario implements PlanUsuario {
     // Nombre de usuario
     private String nombreUsuario;
@@ -15,7 +18,13 @@ class Usuario implements PlanUsuario {
     private List<String> listaContactos;
     private static HashMap<String, Usuario> usuarios = new HashMap<>();
 
-    // Constructor
+    /**
+     * Constructor de la clase Usuario.
+     *
+     * @param nombreUsuario Nombre de usuario del nuevo usuario.
+     * @param contraseña    Contraseña del nuevo usuario.
+     * @param tipoPlan      Tipo de plan del nuevo usuario.
+     */
     public Usuario(String nombreUsuario, String contraseña, String tipoPlan) {
         this.nombreUsuario = nombreUsuario;
         this.contraseña = contraseña;
@@ -24,7 +33,11 @@ class Usuario implements PlanUsuario {
         this.listaContactos = new ArrayList<>();
     }
 
-    // Registra un nuevo usuario
+    /**
+     * Registra un nuevo usuario.
+     *
+     * @return Nuevo usuario registrado.
+     */
     public static Usuario registrar() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese su nombre de usuario:");
@@ -38,7 +51,13 @@ class Usuario implements PlanUsuario {
         return usuario;
     }
 
-    // Autentica al usuario
+    /**
+     * Autentica al usuario.
+     *
+     * @param nombreUsuario Nombre de usuario para la autenticación.
+     * @param contraseña    Contraseña asociada al nombre de usuario.
+     * @return Usuario autenticado o null si la autenticación falla.
+     */
     public static Usuario autenticar(String nombreUsuario, String contraseña) {
         // Implementación para autenticar a un usuario existente
         if (usuarios.containsKey(nombreUsuario)) { // Verifica que el nombre de usuario exista en el mapa de usuarios.
@@ -66,7 +85,11 @@ class Usuario implements PlanUsuario {
         CsvManager.actualizarUsuarios();
     }
 
-    // Cambia la contraseña del usuario
+    /**
+     * Cambia la contraseña del usuario.
+     *
+     * @param nuevaContraseña Nueva contraseña para el usuario.
+     */
     public void cambiarContraseña(String nuevaContraseña) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese su nueva contraseña:");
@@ -75,7 +98,12 @@ class Usuario implements PlanUsuario {
         CsvManager.actualizarUsuarios();
     }
 
-    // Devuelve la duración máxima permitida para las reuniones según el tipo de plan
+    /**
+     * Devuelve la duración máxima permitida para las reuniones según el tipo de
+     * plan.
+     *
+     * @return Duración máxima permitida para las reuniones.
+     */
     public int obtenerDuracionMaxima() {
         if (this.tipoPlan.equals("premium")) {
             return 60;
@@ -84,7 +112,11 @@ class Usuario implements PlanUsuario {
         }
     }
 
-    // Devuelve la cantidad máxima de invitados permitida según el tipo de plan
+    /**
+     * Devuelve la cantidad máxima de invitados permitida según el tipo de plan.
+     *
+     * @return Cantidad máxima de invitados permitida.
+     */
     public int obtenerMaxInvitados() {
         if (this.tipoPlan.equals("premium")) {
             return 20;
@@ -93,7 +125,11 @@ class Usuario implements PlanUsuario {
         }
     }
 
-    // Devuelve el límite de reuniones permitidas por dia según el tipo de plan
+    /**
+     * Devuelve el límite de reuniones permitidas por día según el tipo de plan.
+     *
+     * @return Límite de reuniones permitidas por día.
+     */
     public int obtenerMaxReunionesDiarias() {
         if (this.tipoPlan.equals("premium")) {
             return 5;
@@ -102,7 +138,12 @@ class Usuario implements PlanUsuario {
         }
     }
 
-    // Devuelve las últimas “cantidad” reuniones según el tipo de plan
+    /**
+     * Devuelve las últimas "cantidad" reuniones según el tipo de plan.
+     *
+     * @param cantidad Cantidad de reuniones a obtener.
+     * @return Lista de las últimas reuniones.
+     */
     public List<Reunion> obtenerUltimasReuniones(int cantidad) {
         int limite = 0;
         if (this.tipoPlan.equals("premium")) {
@@ -119,7 +160,11 @@ class Usuario implements PlanUsuario {
         return ultimasReuniones;
     }
 
-    // Imprime los últimos “cantidad” contactos según el tipo de plan
+    /**
+     * Imprime los últimos "cantidad" contactos según el tipo de plan.
+     *
+     * @param cantidad Cantidad de contactos a imprimir.
+     */
     public void imprimirListadoContactos(int cantidad) {
         int limite = 0;
         if (this.tipoPlan.equals("premium")) {
@@ -135,7 +180,11 @@ class Usuario implements PlanUsuario {
         }
     }
 
-    // Añade una reunión a la lista de reuniones del usuario
+    /**
+     * Añade una reunión a la lista de reuniones del usuario.
+     *
+     * @param reunion Reunión a añadir.
+     */
     public void añadirReunion(Reunion reunion) {
         this.listaReuniones.add(reunion);
     }
@@ -166,7 +215,7 @@ class Usuario implements PlanUsuario {
     }
 
     public void crearReunion(String fecha, String hora, String nombre, String pin, String notas,
-                             int duracion, List<String> invitados, String estado) {
+            int duracion, List<String> invitados, String estado) {
         Reunion reunion = new Reunion(this);
         reunion.setFecha(fecha);
         reunion.setHora(hora);

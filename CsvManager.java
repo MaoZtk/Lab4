@@ -1,14 +1,28 @@
+
+/**
+ * Universidad del Valle de Guatemala - POO
+ * Marielos Ortíz, Sandra Pineda, Luisa Jiménez
+ * Laboratorio final
+ */
+
 import java.io.*;
 import java.util.*;
 
-// Clase para manejar la lectura y escritura de archivos CSV
+/**
+ * Clase para manejar la lectura y escritura de archivos CSV.
+ * Proporciona métodos para trabajar con información de usuarios y reuniones.
+ */
 class CsvManager {
-    // Nombre del archivo que contiene los datos de los usuarios
+    /** Nombre del archivo que contiene los datos de los usuarios */
     private static final String ARCHIVO_USUARIOS = "usuarios.csv";
-    // Nombre del archivo que contiene los datos de las reuniones
+    /** Nombre del archivo que contiene los datos de las reuniones */
     private static final String ARCHIVO_REUNIONES = "reuniones.csv";
 
-    // Escribe información de usuarios en un archivo CSV
+    /**
+     * Escribe información de usuarios en un archivo CSV.
+     *
+     * @param usuarios Lista de usuarios a escribir.
+     */
     public static void escribirUsuarios(List<Usuario> usuarios) {
         try {
             FileWriter fw = new FileWriter(ARCHIVO_USUARIOS, true);
@@ -25,15 +39,22 @@ class CsvManager {
         }
     }
 
-    // Escribe información de reuniones en un archivo CSV
+    /**
+     * Escribe información de reuniones en un archivo CSV.
+     *
+     * @param reuniones Lista de reuniones a escribir.
+     */
     public static void escribirReuniones(List<Reunion> reuniones) {
         try {
             FileWriter fw = new FileWriter(ARCHIVO_REUNIONES, true);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter pw = new PrintWriter(bw);
             for (Reunion reunion : reuniones) {
-                if (reunion != null) { 
-                    pw.println(reunion.getNombre() + "," + reunion.getPin() + "," + reunion.getNotas() + "," + reunion.getDuracion() + "," + reunion.getEstado() + "," + reunion.getFecha() + "," + reunion.getHora() + "," + reunion.getListaInvitados() + "," + (reunion.getUsuario() != null ? reunion.getUsuario().getNombreUsuario() : ""));
+                if (reunion != null) {
+                    pw.println(reunion.getNombre() + "," + reunion.getPin() + "," + reunion.getNotas() + ","
+                            + reunion.getDuracion() + "," + reunion.getEstado() + "," + reunion.getFecha() + ","
+                            + reunion.getHora() + "," + reunion.getListaInvitados() + ","
+                            + (reunion.getUsuario() != null ? reunion.getUsuario().getNombreUsuario() : ""));
                 }
             }
             pw.close();
@@ -43,13 +64,16 @@ class CsvManager {
             e.printStackTrace();
         }
     }
-    
 
-    // Lee información de usuarios de un archivo CSV
+    /**
+     * Lee información de usuarios de un archivo CSV.
+     *
+     * @return Lista de usuarios leídos.
+     */
     public static List<Usuario> leerUsuarios() {
         List<Usuario> usuarios = new ArrayList<>();
         try (FileReader fr = new FileReader(ARCHIVO_USUARIOS);
-             BufferedReader br = new BufferedReader(fr)) {
+                BufferedReader br = new BufferedReader(fr)) {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] datos = linea.split(",");
@@ -64,7 +88,11 @@ class CsvManager {
         return usuarios;
     }
 
-    // Lee información de reuniones de un archivo CSV
+    /**
+     * Lee información de reuniones de un archivo CSV.
+     *
+     * @return Lista de reuniones leídas.
+     */
     public static List<Reunion> leerReuniones() {
         List<Reunion> reuniones = new ArrayList<>();
         try {
@@ -83,7 +111,8 @@ class CsvManager {
                 List<String> listaInvitados = Arrays.asList(datos[7].split(","));
                 String nombreUsuario = datos[8];
                 Usuario usuario = buscarUsuario(nombreUsuario);
-                Reunion reunion = new Reunion(nombre, pin, notas, duracion, estado, fecha, hora, listaInvitados, usuario);
+                Reunion reunion = new Reunion(nombre, pin, notas, duracion, estado, fecha, hora, listaInvitados,
+                        usuario);
                 reuniones.add(reunion);
                 linea = br.readLine();
             }
@@ -95,7 +124,12 @@ class CsvManager {
         return reuniones;
     }
 
-    // Busca un usuario por su nombre de usuario
+    /**
+     * Busca un usuario por su nombre de usuario.
+     *
+     * @param nombreUsuario El nombre de usuario a buscar.
+     * @return El usuario encontrado o null si no se encuentra.
+     */
     public static Usuario buscarUsuario(String nombreUsuario) {
         List<Usuario> usuarios = leerUsuarios();
         for (Usuario usuario : usuarios) {
@@ -110,8 +144,8 @@ class CsvManager {
     public static void actualizarUsuarios() {
         List<Usuario> usuarios = leerUsuarios();
         try (FileWriter fw = new FileWriter(ARCHIVO_USUARIOS);
-             BufferedWriter bw = new BufferedWriter(fw);
-             PrintWriter pw = new PrintWriter(bw)) {
+                BufferedWriter bw = new BufferedWriter(fw);
+                PrintWriter pw = new PrintWriter(bw)) {
             for (Usuario usuario : usuarios) {
                 pw.println(usuario.getNombreUsuario() + "," + usuario.getTipoPlan());
             }
@@ -120,7 +154,11 @@ class CsvManager {
         }
     }
 
-    // Lee información de contactos de un archivo CSV
+    /**
+     * Lee información de contactos de un archivo CSV.
+     *
+     * @return Lista de contactos leídos.
+     */
     public static List<String> leerContactos() {
         List<String> contactos = new ArrayList<>();
         try {
